@@ -1,0 +1,2 @@
+export NLAB_DOCKER_NGINX_IMAGE_NAME=nlab-nginx
+export NLAB_NGINX_PORT=80
