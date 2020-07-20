@@ -1,0 +1,6 @@
+FROM python:3
+WORKDIR /usr/src/app
+# mistletoe is a python markdown renderer
+RUN pip3 install --no-cache-dir mistletoe
+# Create a log directory
+RUN mkdir /var/log/nlab
