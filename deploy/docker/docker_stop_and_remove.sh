@@ -14,3 +14,7 @@ docker rm $NLAB_DOCKER_NGINX_IMAGE_NAME
 #Stop and remove the mysql container
 docker stop $NLAB_DOCKER_MYSQL_IMAGE_NAME
 docker rm $NLAB_DOCKER_MYSQL_IMAGE_NAME
+
+#Stop and remove the python container
+docker stop $NLAB_DOCKER_PYTHON_IMAGE_NAME
+docker rm $NLAB_DOCKER_PYTHON_IMAGE_NAME

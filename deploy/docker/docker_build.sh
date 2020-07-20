@@ -7,10 +7,11 @@
 #
 # being set.
 
-#Build nginx image
-echo "$NLAB_DOCKER_NGINX_IMAGE_NAME"
+# Build nginx image
 docker build -f deploy/docker/nginx/dockerfile -t $NLAB_DOCKER_NGINX_IMAGE_NAME .
 
-#Build mysql image
-echo "$NLAB_DOCKER_MYSQL_IMAGE_NAME"
+# Build mysql image
 docker build -f deploy/docker/mysql/dockerfile -t $NLAB_DOCKER_MYSQL_IMAGE_NAME .
+
+# Build python image
+docker build -f deploy/docker/python/dockerfile -t $NLAB_DOCKER_PYTHON_IMAGE_NAME .
