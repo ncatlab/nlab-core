@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # It may be possible to remove the following eventually, it is due to some
 # incompatibility between client and server versions of MySQL
