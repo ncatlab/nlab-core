@@ -18,3 +18,6 @@ docker rm $NLAB_DOCKER_MYSQL_IMAGE_NAME
 #Stop and remove the python container
 docker stop $NLAB_DOCKER_PYTHON_IMAGE_NAME
 docker rm $NLAB_DOCKER_PYTHON_IMAGE_NAME
+
+# Disconnect from the network NLAB_DOCKER_MYSQL_NETWORK_NAME, and remove it
+docker network rm $NLAB_DOCKER_MYSQL_NETWORK_NAME
