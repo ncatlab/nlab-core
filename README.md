@@ -50,3 +50,16 @@ nLab architecture
 1. All interaction with the nLab is via an nginx server.
 2. The pages of the nLab are served statically by nginx, i.e. the nLab
 itself is actually a static website.
+3. The nLab is backed by a MySQL database which stores, for a given page,
+metadata about this page, and page content in HTML (i.e. rendering from markdown
+happens before database storage).
+4. The static pages served by nginx are generated upon page edit, or manually,
+by 'page_renderer.py' from the database.
+5. The HTML page content stored in the database is rendered upon page edit from
+markdown by 'source_renderer.py'.
+
+nLab code testing
+-----------------
+
+Before pushing/merging to master, all tests must passed. The tests must be run
+manually. See the README.md file in test/ for details on how to run the tests.

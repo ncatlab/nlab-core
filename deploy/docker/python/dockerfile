@@ -4,3 +4,6 @@ WORKDIR /usr/src/app
 RUN pip3 install --no-cache-dir mistletoe
 # Create a log directory
 RUN mkdir /var/log/nlab
+# Set things up to be able to use MySQLdb
+RUN apt-get -y install default-libmysqlclient-dev
+RUN pip3 install mysqlclient
