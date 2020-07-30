@@ -2,6 +2,7 @@
 
 import argparse
 import datetime
+import json
 import string
 import sys
 import urllib.parse
@@ -219,14 +220,22 @@ def main():
             sub_wiki_name,
             sub_wiki_address,
             last_revision)
-        print(render(page_metadata, _page_content(page_id)))
+        print(json.dumps(
+            {
+                "page_title": page_title,
+                "rendered_html": render(page_metadata, _page_content(page_id)),
+                "sub_wiki_address": sub_wiki_address
+            },
+            indent = 2))
     except Exception as exception:
+        raise exception
         logger.warning(
             "An unexpected error occurred when rendering page with id: " +
             str(page_id) +
             ". Error: " +
             str(exception))
         sys.exit("An unexpected error occurred")
+    logger.info("Successfully rendered page with id: " + str(page_id))
 
 if __name__ == "__main__":
     main()

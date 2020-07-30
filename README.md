@@ -44,6 +44,40 @@ wait a little while and try again.
 To deploy the nLab in production, follow all of these steps in the same way, but
 use `nlab_production_environment_variables` instead.
 
+The nginx docker image uses an `nginx.conf` file which is created by the
+following script.
+
+```bash
+./deploy/docker/tools/create_nginx_conf.py
+```
+
+It replaces the placeholders in the template `nginx_template.conf` with
+environment variables of the same name in
+`deploy/nlab_local_environment_variables` or
+`deploy/nlab_production_environment_variables`.
+
+Similarly, the python docker image uses an `environment_variables` file which is
+created by the following script.
+
+```bash
+./deploy/docker/tools/create_python_environment_variables.py
+```
+
+It replaces the placeholders in the template `python_environment_variables` with
+environment variables of the same name in
+`deploy/nlab_local_environment_variables` or
+`deploy/nlab_production_environment_variables`.
+
+In both cases, changing the value of one of the placeholders should be achieved
+by changing `deploy/nlab_local_environment_variables` and/or
+`deploy/nlab_production_environment_variables`, and re-building (this is not
+necessary for the python docker image) and re-running the docker image.
+
+Tweaking the nginx config in such a way that a new environment variable is
+needed should be achieved by tweaking both `nginx_template.conf` and
+`deploy/docker/tools/create_nginx_conf.py`, and then proceeding as in the
+previous paragraph. Similarly for adding a new python environment variable.
+
 nLab architecture
 -----------------
 

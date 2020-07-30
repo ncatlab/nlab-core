@@ -1,1 +1,2 @@
 FROM nginx
+COPY deploy/docker/nginx/nginx.conf /etc/nginx/nginx.conf

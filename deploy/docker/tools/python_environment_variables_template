@@ -1,0 +1,6 @@
+NLAB_DEPLOYED_STATIC_ROOT_DIRECTORY=$nlab_deployed_static_root_directory
+NLAB_MYSQL_DATABASE_HOST=$nlab_deployed_mysql_database_host
+NLAB_MYSQL_DATABASE_NAME=$nlab_mysql_database_name
+NLAB_MYSQL_DATABASE_PASSWORD=$nlab_mysql_database_password
+NLAB_MYSQL_DATABASE_USER=$nlab_mysql_database_user
+NLAB_LOG_DIRECTORY=$nlab_log_directory

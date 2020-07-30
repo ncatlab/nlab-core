@@ -1,27 +1,38 @@
 #!/usr/bin/python3
 
 import argparse
-import difflib
+import json
 import os
 import subprocess
 import sys
 
-def _difference_between_strings(expected, actual):
-    return '\n'.join(difflib.context_diff(
-        expected.split("\n"),
-        actual.split("\n"),
-        fromfile = 'Expected',
-        tofile = 'Actual'))
+from tools.testing import TestFailedException
 
-class TestFailedException(Exception):
-    def __init__(self, test_name, message, expected, actual):
-        super().__init__(
-            "Test failed: " +
-            test_name +
-            ". " +
-            message +
-            "\n\n" +
-            _difference_between_strings(expected, actual))
+def _compare(test_name, expected_rendered_page_json, actual_rendered_page_json):
+    actual_page_title = actual_rendered_page_json["page_title"]
+    expected_page_title = expected_rendered_page_json["page_title"]
+    if actual_page_title != expected_page_title:
+        raise TestFailedException(
+            test_name,
+            "Expected page title different from actual page title",
+            expected_page_title,
+            actual_page_title)
+    actual_sub_wiki_address = actual_rendered_page_json["sub_wiki_address"]
+    expected_sub_wiki_address = expected_rendered_page_json["sub_wiki_address"]
+    if actual_sub_wiki_address != expected_sub_wiki_address:
+        raise TestFailedException(
+            test_name,
+            "Expected sub wiki address different from actual sub wiki address",
+            expected_sub_wiki_address,
+            actual_sub_wiki_address)
+    expected_rendered_page = expected_rendered_page_json["rendered_html"]
+    actual_rendered_page = actual_rendered_page_json["rendered_html"]
+    if expected_rendered_page != actual_rendered_page:
+        raise TestFailedException(
+            test_name,
+            "Expected different from actual rendering.",
+            expected_rendered_page,
+            actual_rendered_page)
 
 def test_page_renderer_without_nforum_discussion():
     render_page_subprocess = subprocess.run(
@@ -39,13 +50,16 @@ def test_page_renderer_without_nforum_discussion():
     with open("resources/rendered_page_without_nforum_discussion.html") as \
             rendered_page_file:
         expected_rendered_page = rendered_page_file.read()
-    actual_rendered_page = render_page_subprocess.stdout
-    if actual_rendered_page != expected_rendered_page:
-        raise TestFailedException(
-            "page_renderer_without_nforum_discussion",
-            "Expected different from actual rendering.",
-            expected_rendered_page,
-            actual_rendered_page)
+    expected_rendered_page_json = {
+        "page_title": "title of test page",
+        "rendered_html": expected_rendered_page,
+        "sub_wiki_address": "nlab"
+    }
+    actual_rendered_page_json = json.loads(render_page_subprocess.stdout)
+    _compare(
+        "page_renderer_without_nforum_discussion",
+        expected_rendered_page_json,
+        actual_rendered_page_json)
 
 def test_page_renderer_without_nforum_discussion_with_sub_wiki():
     render_page_subprocess = subprocess.run(
@@ -65,13 +79,16 @@ def test_page_renderer_without_nforum_discussion_with_sub_wiki():
                 "rendered_page_without_nforum_discussion_with_sub_wiki.html") \
             as rendered_page_file:
         expected_rendered_page = rendered_page_file.read()
-    actual_rendered_page = render_page_subprocess.stdout
-    if actual_rendered_page != expected_rendered_page:
-        raise TestFailedException(
-            "page_renderer_without_nforum_discussion_with_sub_wiki",
-            "Expected different from actual rendering.",
-            expected_rendered_page,
-            actual_rendered_page)
+    expected_rendered_page_json = {
+        "page_title": "title of other test page",
+        "rendered_html": expected_rendered_page,
+        "sub_wiki_address": "some-sub-wiki"
+    }
+    actual_rendered_page_json = json.loads(render_page_subprocess.stdout)
+    _compare(
+        "page_renderer_without_nforum_discussion_with_sub_wiki",
+        expected_rendered_page_json,
+        actual_rendered_page_json)
 
 def test_page_renderer_with_nforum_discussion():
     render_page_subprocess = subprocess.run(
@@ -89,14 +106,21 @@ def test_page_renderer_with_nforum_discussion():
     with open("resources/rendered_page_with_nforum_discussion.html") as \
             rendered_page_file:
         expected_rendered_page = rendered_page_file.read()
-    actual_rendered_page = render_page_subprocess.stdout
-    if actual_rendered_page != expected_rendered_page:
-        raise TestFailedException(
-            "page_renderer_with_nforum_discussion",
-            "Expected different from actual rendering.",
-            expected_rendered_page,
-            actual_rendered_page)
+    expected_rendered_page_json = {
+        "page_title": "title of third test page",
+        "rendered_html": expected_rendered_page,
+        "sub_wiki_address": "nlab"
+    }
+    actual_rendered_page_json = json.loads(render_page_subprocess.stdout)
+    _compare(
+        "page_renderer_with_nforum_discussion",
+        expected_rendered_page_json,
+        actual_rendered_page_json)
 
+def run_tests():
+    test_page_renderer_without_nforum_discussion()
+    test_page_renderer_without_nforum_discussion_with_sub_wiki()
+    test_page_renderer_with_nforum_discussion()
 
 """
 Sets up the command line argument parsing
@@ -120,9 +144,7 @@ def main():
     if arguments.populate_database:
         subprocess.run(["tools/populate_database_with_test_data.sh"])
     try:
-        test_page_renderer_without_nforum_discussion()
-        test_page_renderer_without_nforum_discussion_with_sub_wiki()
-        test_page_renderer_with_nforum_discussion()
+        run_tests()
     except TestFailedException as testFailedException:
         sys.exit(str(testFailedException))
     print("All tests passed")

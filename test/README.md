@@ -29,13 +29,13 @@ or, the first time you wish to run the tests, use the flag `-p`, or its
 longer form `--populate-database`, as follows.
 
 ```bash
-page_renderer_test.py -p
+all_tests.py -p
 ```
 
 After this, if you wish to run the tests again, simply run
 
 ```bash
-page_renderer_test.py
+all_tests.py
 ```
 
 without populating the database with test data again.
@@ -43,3 +43,11 @@ without populating the database with test data again.
 If all tests pass, you will receive the output `All tests passed` upon running
 the above script. Otherwise, you will receive as output the details of which
 test failed, and what exactly failed.
+
+The tests for a particular python module can be run individually. For example,
+to test `page_renderer.py`, one can run the following. The flag
+`-p/--populate-database` can be used in the same way in these cases.
+
+```bash
+page_renderer_test.py
+```
