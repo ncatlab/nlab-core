@@ -2,6 +2,8 @@ FROM python:3
 WORKDIR /usr/src/app
 # mistletoe is a python markdown renderer
 RUN pip3 install --no-cache-dir mistletoe
+# cherrypy is a python application server
+RUN pip3 install --no-cache-dir cherrypy
 # Create a log directory
 RUN mkdir /var/log/nlab
 # Set things up to be able to use MySQLdb

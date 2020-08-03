@@ -53,7 +53,7 @@ def render(page_id):
         [
             "python3",
             "page_renderer.py",
-            page_id
+            str(page_id)
         ],
         capture_output = True,
         text = True)

@@ -1,3 +1,4 @@
+NLAB_BACKEND_PORT=$nlab_backend_port
 NLAB_DEPLOYED_STATIC_ROOT_DIRECTORY=$nlab_deployed_static_root_directory
 NLAB_MYSQL_DATABASE_HOST=$nlab_deployed_mysql_database_host
 NLAB_MYSQL_DATABASE_NAME=$nlab_mysql_database_name

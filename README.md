@@ -33,14 +33,6 @@ again, and run the following in addition.
 ./deploy/populate_database.sh
 ```
 
-If you receive an error such as
-
-```
-Lost connection to MySQL server at 'handshake: reading initial communication packet'
-```
-
-wait a little while and try again.
-
 To deploy the nLab in production, follow all of these steps in the same way, but
 use `nlab_production_environment_variables` instead.
 
@@ -85,15 +77,17 @@ nLab architecture
 2. The pages of the nLab are served statically by nginx, i.e. the nLab
 itself is actually a static website.
 3. The nLab is backed by a MySQL database which stores, for a given page,
-metadata about this page, and page content in HTML (i.e. rendering from markdown
-happens before database storage).
-4. The static pages served by nginx are generated upon page edit, or manually,
-by 'page_renderer.py' from the database.
-5. The HTML page content stored in the database is rendered upon page edit from
-markdown by 'source_renderer.py'.
+metadata about this page, and the markdown source.
+4. There is a backend application server (CherryPy), which nginx
+(reverse) proxies to in some cases.
+5. The static pages served by nginx are generated from the database in one of
+the following ways: i) upon page edit ii) by a GET call to the backend
+server iii) manually. All of these rely on the functions in
+`render_nlab_page_for_viewing.py`, which in turn rely on `page_renderer.py`
+and `source_renderer.py`.
 
 nLab code testing
 -----------------
 
-Before pushing/merging to master, all tests must passed. The tests must be run
+Before pushing/merging to master, all tests must pass. The tests must be run
 manually. See the README.md file in test/ for details on how to run the tests.

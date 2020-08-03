@@ -21,3 +21,7 @@ docker rm $NLAB_DOCKER_PYTHON_IMAGE_NAME
 
 # Disconnect from the network NLAB_DOCKER_MYSQL_NETWORK_NAME, and remove it
 docker network rm $NLAB_DOCKER_MYSQL_NETWORK_NAME
+
+# Disconnect from the network NLAB_DOCKER_BACKEND_SERVER_NETWORK_NAME, and
+# remove it
+docker network rm $NLAB_DOCKER_BACKEND_SERVER_NETWORK_NAME

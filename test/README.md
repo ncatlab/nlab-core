@@ -1,7 +1,8 @@
 nLab code testing
-------------------
+=================
 
-Always use a clean docker setup for running tests, i.e. run
+When it is important that the tests all pass, e.g. when merging new code to
+master, always use a clean docker setup for running tests, i.e. run
 
 ```bash
 deploy/docker/docker_stop_and_remove.sh
@@ -51,3 +52,16 @@ to test `page_renderer.py`, one can run the following. The flag
 ```bash
 page_renderer_test.py
 ```
+
+Notes
+-----
+
+Many of the tests make liberal use of the option
+
+```python
+shell = True
+```
+
+when using the Python `subprocess.run` function. This is fine in the intended
+context, but care should be taken if the code is borrowed and run in other
+contexts.

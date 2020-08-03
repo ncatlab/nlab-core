@@ -1,7 +1,9 @@
+export NLAB_BACKEND_PORT=9000
 export NLAB_DEPLOYED_LOG_DIRECTORY=/var/log/nlab
 export NLAB_DEPLOYED_MYSQL_DATABASE_HOST=nlab-mysql
 export NLAB_DEPLOYED_NGINX_PORT=80
 export NLAB_DEPLOYED_STATIC_ROOT_DIRECTORY=/usr/share/nginx/html/nlab-static
+export NLAB_DOCKER_BACKEND_SERVER_NETWORK_NAME=nlab-backend-server-network
 export NLAB_DOCKER_MYSQL_IMAGE_NAME=nlab-mysql
 export NLAB_DOCKER_MYSQL_NETWORK_NAME=nlab-mysql-network
 export NLAB_DOCKER_NGINX_IMAGE_NAME=nlab-nginx

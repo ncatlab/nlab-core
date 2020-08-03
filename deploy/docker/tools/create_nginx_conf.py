@@ -19,6 +19,7 @@ def _nginx_config():
         nginx_config_template = string.Template(
             nginx_config_template_file.read())
     return nginx_config_template.substitute(
+        nlab_backend_port = os.environ["NLAB_BACKEND_PORT"],
         nlab_deployed_nginx_port = os.environ["NLAB_DEPLOYED_NGINX_PORT"],
         nlab_deployed_static_root_directory = os.environ[
             "NLAB_DEPLOYED_STATIC_ROOT_DIRECTORY"])

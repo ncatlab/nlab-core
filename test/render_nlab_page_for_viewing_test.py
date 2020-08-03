@@ -37,8 +37,22 @@ def test_render_and_place_for_viewing():
              expected_rendered_page,
              actual_rendered_page)
 
+def _run_and_clean_up(test):
+    try:
+        test()
+    finally:
+        subprocess.run(
+            "docker exec -it " +
+                os.environ["NLAB_DOCKER_NGINX_IMAGE_NAME"] +
+                " /bin/bash -c 'rm -r " +
+                os.path.join(
+                    os.environ["NLAB_DEPLOYED_STATIC_ROOT_DIRECTORY"],
+                    "*") +
+                "'",
+            shell = True)
+
 def run_tests():
-    test_render_and_place_for_viewing()
+    _run_and_clean_up(test_render_and_place_for_viewing)
 
 """
 Sets up the command line argument parsing

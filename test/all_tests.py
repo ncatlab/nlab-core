@@ -4,6 +4,8 @@ import argparse
 import os
 import subprocess
 
+import backend_test
+import nginx_test
 import page_renderer_test
 import render_nlab_page_for_viewing_test
 from tools.testing import TestFailedException
@@ -32,6 +34,8 @@ def main():
     try:
         page_renderer_test.run_tests()
         render_nlab_page_for_viewing_test.run_tests()
+        backend_test.run_tests()
+        nginx_test.run_tests()
     except TestFailedException as testFailedException:
         sys.exit(str(testFailedException))
     print("All tests passed")
