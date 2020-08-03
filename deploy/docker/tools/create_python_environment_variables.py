@@ -22,6 +22,8 @@ def _environment_variables():
             environment_variables_template_file.read())
     return environment_variables_template.substitute(
         nlab_backend_port = os.environ["NLAB_BACKEND_PORT"],
+        nlab_deployed_run_command_for_latex_compiler = os.environ[
+            "NLAB_DEPLOYED_RUN_COMMAND_FOR_LATEX_COMPILER"],
         nlab_deployed_static_root_directory = os.environ[
             "NLAB_DEPLOYED_STATIC_ROOT_DIRECTORY"],
         nlab_deployed_mysql_database_host = os.environ[

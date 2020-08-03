@@ -46,4 +46,5 @@ docker build -f deploy/docker/mysql/dockerfile \
 
 # Build python image
 docker build -f deploy/docker/python/dockerfile \
+  --build-arg NLAB_DEPLOYED_ITEX2MML_PATH \
   -t $NLAB_DOCKER_PYTHON_IMAGE_NAME .

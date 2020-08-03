@@ -21,18 +21,6 @@ docker network create $NLAB_DOCKER_MYSQL_NETWORK_NAME
 # Setup a network for communication with the Python backend server
 docker network create $NLAB_DOCKER_BACKEND_SERVER_NETWORK_NAME
 
-########
-#nginx
-#######
-
-# Runs nginx on port NLAB_NGINX_PORT, with nLab pages for static viewing mounted
-# as a volume from NLAB_LOCAL_STATIC_ROOT_DIRECTORY
-docker run --name $NLAB_DOCKER_NGINX_IMAGE_NAME \
-  -d -p $NLAB_NGINX_PORT:$NLAB_DEPLOYED_NGINX_PORT \
-  -v $NLAB_LOCAL_STATIC_ROOT_DIRECTORY:$NLAB_DEPLOYED_STATIC_ROOT_DIRECTORY \
-  --network $NLAB_DOCKER_BACKEND_SERVER_NETWORK_NAME \
-  $NLAB_DOCKER_NGINX_IMAGE_NAME
-
 #######
 #mysql
 #######
@@ -82,3 +70,16 @@ docker network connect $NLAB_DOCKER_MYSQL_NETWORK_NAME \
   $NLAB_DOCKER_PYTHON_IMAGE_NAME
 docker network connect $NLAB_DOCKER_BACKEND_SERVER_NETWORK_NAME \
   $NLAB_DOCKER_PYTHON_IMAGE_NAME
+
+########
+#nginx
+#######
+
+# Runs nginx on port NLAB_NGINX_PORT, with nLab pages for static viewing mounted
+# as a volume from NLAB_LOCAL_STATIC_ROOT_DIRECTORY
+docker run --name $NLAB_DOCKER_NGINX_IMAGE_NAME \
+  -d -p $NLAB_NGINX_PORT:$NLAB_DEPLOYED_NGINX_PORT \
+  -v $NLAB_LOCAL_STATIC_ROOT_DIRECTORY:$NLAB_DEPLOYED_STATIC_ROOT_DIRECTORY \
+  --network $NLAB_DOCKER_BACKEND_SERVER_NETWORK_NAME \
+  $NLAB_DOCKER_NGINX_IMAGE_NAME
+

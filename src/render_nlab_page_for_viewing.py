@@ -88,7 +88,6 @@ def main():
     try:
         render_and_place_for_static_viewing(page_id)
     except Exception as exception:
-        raise exception
         logger.warning(
             "An unexpected error occurred when rendering page with id: " +
             str(page_id) +

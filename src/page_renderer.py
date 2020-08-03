@@ -228,7 +228,6 @@ def main():
             },
             indent = 2))
     except Exception as exception:
-        raise exception
         logger.warning(
             "An unexpected error occurred when rendering page with id: " +
             str(page_id) +

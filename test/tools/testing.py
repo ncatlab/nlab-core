@@ -37,12 +37,13 @@ def launch_backend_server():
 
 def shutdown_backend_server_if_running():
     if "pid_of_backend_server" in globals():
-        subprocess.run(
+        kill_backend_server_subprocess = subprocess.run(
             "docker exec -i " +
                 os.environ["NLAB_DOCKER_PYTHON_IMAGE_NAME"] +
                 " kill " +
                 pid_of_backend_server,
             shell = True)
+        kill_backend_server_subprocess.check_returncode()
         del globals()["pid_of_backend_server"]
     if "backend_subprocess" in globals():
         backend_subprocess.kill()

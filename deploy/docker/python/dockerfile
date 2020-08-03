@@ -1,4 +1,5 @@
 FROM python:3
+ARG NLAB_DEPLOYED_ITEX2MML_PATH
 WORKDIR /usr/src/app
 # mistletoe is a python markdown renderer
 RUN pip3 install --no-cache-dir mistletoe
@@ -9,3 +10,5 @@ RUN mkdir /var/log/nlab
 # Set things up to be able to use MySQLdb
 RUN apt-get -y install default-libmysqlclient-dev
 RUN pip3 install mysqlclient
+ENV NLAB_DEPLOYED_ITEX2MML_PATH=$NLAB_DEPLOYED_ITEX2MML_PATH
+COPY deploy/docker/python/itex2MML $NLAB_DEPLOYED_ITEX2MML_PATH
