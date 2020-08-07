@@ -1,0 +1,3 @@
+deploy/nlab-static/*
+__pycache__
+deploy/docker/python/environment_variables
